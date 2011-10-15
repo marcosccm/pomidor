@@ -17,5 +17,9 @@ class Project
     def find(id)
 
     end
+
+    def create(name)
+
+    end
   end
 end
