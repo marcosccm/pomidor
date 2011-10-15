@@ -13,5 +13,9 @@ class Project
     def all
       [ Project.new("test"), Project.new("another")]
     end
+
+    def find(id)
+
+    end
   end
 end
