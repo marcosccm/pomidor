@@ -28,6 +28,7 @@ GEM
     rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.6.0)
+    yajl-ruby (1.0.0)
 
 PLATFORMS
   ruby
@@ -37,3 +38,4 @@ DEPENDENCIES
   rack-test
   rest-client
   rspec
+  yajl-ruby

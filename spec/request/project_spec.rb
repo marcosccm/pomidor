@@ -8,9 +8,9 @@ describe "Project API"  do
     end
 
     it "returns a list of projects" do
-      Project.stub(:all).and_return("test")
+      Project.should_receive(:all).and_return("json")
       get "/project"
-      last_response.body.should == '"test"'
+      last_response.body.should == '"json"'
     end
   end  
 end

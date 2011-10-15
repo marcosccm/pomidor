@@ -6,6 +6,7 @@ require "bundler"
 Bundler.setup(:default, :test)
 require "grape"
 require "rack/test"
+require "multi_json"
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods

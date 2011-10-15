@@ -1,7 +1,9 @@
 module Pomidor
   class API < Grape::API
-    get "/project" do
-      Project.all
+    resource :project do
+      get do
+        Project.all
+      end
     end
   end
 end
