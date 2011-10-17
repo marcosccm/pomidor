@@ -7,10 +7,17 @@ Bundler.setup(:default, :test)
 require "grape"
 require "rack/test"
 require "multi_json"
+require "redis"
+
+$redis = Redis.new
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
+  config.after do
+    $redis.flushall
+  end
 end
+
 
 def app
   Pomidor::API

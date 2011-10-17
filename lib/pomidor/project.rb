@@ -1,25 +1,16 @@
-class Project
-  attr_accessor :name
+module Pomidor
+  class Project
+    attr_accessor :name
 
-  def initialize(name)
-    @name = name
-  end
-
-  def to_json(encoder=Yajl::Encoder.new)
-    encoder.encode({ "name" => @name })
-  end
-
-  class << self
-    def all
-      [ Project.new("test"), Project.new("another")]
+    def initialize(name)
+      @name = name
     end
 
-    def find(id)
-
+    def to_json(encoder=Yajl::Encoder.new)
+      encoder.encode({ "name" => @name })
     end
 
-    def create(name)
-
+    class << self
     end
   end
 end

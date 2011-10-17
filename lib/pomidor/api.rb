@@ -2,15 +2,15 @@ module Pomidor
   class API < Grape::API
     resource :project do
       get do
-        Project.all
+        Projects.all
       end
 
       get "/:id" do 
-        Project.find(params[:id]) 
+        Projects.find(params[:id]) 
       end
 
       post do
-        Project.create(params[:project]) 
+        Projects.create(params[:project]) 
       end
     end
   end
