@@ -13,5 +13,9 @@ module Pomidor
         Projects.create(params[:project]) 
       end
     end
+
+    get "project/:id/tasks" do
+      Tasks.of_project(params[:id])
+    end
   end
 end

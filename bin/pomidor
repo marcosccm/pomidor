@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+require "redis"
+
+redis = Redis.new
+
+id = redis.llen("pomidor:projects") + 1
+redis.lpush("pomidor:projects", id)
+redis.hset("pomidor:projects:#{id}", "name", ARGV.last)
+exit 0
+
