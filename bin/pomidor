@@ -1,10 +1,25 @@
 #!/usr/bin/env ruby
 require "redis"
+require "main"
 
-redis = Redis.new
+Main do
+  fattr(:redis) { Redis.new } 
 
-id = redis.llen("pomidor:projects") + 1
-redis.lpush("pomidor:projects", id)
-redis.hset("pomidor:projects:#{id}", "name", ARGV.last)
-exit 0
+  def run
+    help!
+  end
 
+  mode("project") do
+    mode("create") do
+      description("create a new project")
+      argument("name") do
+        description("the name of the new project")
+      end
+      def run 
+        id = redis.llen("pomidor:projects") + 1
+        redis.lpush("pomidor:projects", id)
+        redis.hset("pomidor:projects:#{id}", "name", params["name"].value)
+      end
+    end
+  end
+end

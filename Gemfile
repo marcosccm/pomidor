@@ -4,6 +4,7 @@ gem "rest-client"
 gem "grape"
 gem "yajl-ruby"
 gem "redis"
+gem "main"
 
 group :test, :development do
   gem "cucumber"
