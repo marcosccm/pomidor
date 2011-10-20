@@ -39,7 +39,11 @@ describe Pomidor::Projects do
     it "returns all projects" do
       Pomidor::Projects.add("test 1")
       Pomidor::Projects.add("test 2")
-      Pomidor::Projects.all.count.should == 2
+      projects = Pomidor::Projects.all
+      
+      projects.count == 2
+      projects.first.name.should == "test 1" 
+      projects.last.name.should  == "test 2" 
     end
   end
 end

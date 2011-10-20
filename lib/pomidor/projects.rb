@@ -2,8 +2,8 @@ module Pomidor
   class Projects
     class << self
       def all
-        data = $redis.keys("projects:*")
-        data.map { |d| map_project(d) }
+        ids = $redis.lrange("projects", 0, -1).reverse
+        ids.map { |id| find(id) } 
       end
 
       def find(id)
@@ -12,11 +12,12 @@ module Pomidor
       end
 
       def count
-        $redis.get("projects").to_i
+        $redis.llen("projects").to_i
       end
 
       def add(name)
-        id = $redis.incr("projects")
+        id = count + 1
+        $redis.lpush("projects", id)
         $redis.hset("projects:#{id}", "id", id)
         $redis.hset("projects:#{id}", "name", name)
         id
