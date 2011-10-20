@@ -3,6 +3,10 @@ Before do
   @redis.flushall
 end
 
+Given /^a project called "([^"]*)"$/ do |project_name|
+  result = system "pomidor project create '#{project_name}'"
+  result.should be_true
+end
 
 Then /^there should be a project called "([^"]*)"$/ do |project_name|
   values =  @redis.keys("pomidor:projects:*").inject([]) do |values, key|

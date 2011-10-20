@@ -21,5 +21,14 @@ Main do
         redis.hset("pomidor:projects:#{id}", "name", params["name"].value)
       end
     end
+
+    mode("list") do
+      def run
+        values = redis.keys("pomidor:projects:*").inject([]) do |values, key|
+          values.concat redis.hvals(key)
+        end
+        puts *values
+      end
+    end
   end
 end
