@@ -1,9 +1,11 @@
 #!/usr/bin/env ruby
 require "redis"
 require "main"
+require_relative "./../lib/pomidor"
 
 Main do
   fattr(:redis) { Redis.new } 
+  fattr(:tracker) { Pomidor::PomodoroTracker.new } 
 
   def run
     help!
@@ -24,10 +26,7 @@ Main do
 
     mode("list") do
       def run
-        values = redis.keys("pomidor:projects:*").inject([]) do |values, key|
-          values.concat redis.hvals(key)
-        end
-        puts *values
+        puts *tracker.project_names
       end
     end
   end
