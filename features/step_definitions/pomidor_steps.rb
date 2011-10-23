@@ -3,9 +3,14 @@ Before do
   @redis.flushall
 end
 
+Given /^the following projects$/ do |projects|
+  projects.hashes.each do |project|
+    create_project(project['name'])
+  end
+end
+
 Given /^a project called "([^"]*)"$/ do |project_name|
-  result = system "pomidor project create '#{project_name}'"
-  result.should be_true
+  create_project(project_name)
 end
 
 Then /^there should be a project called "([^"]*)"$/ do |project_name|
@@ -19,3 +24,7 @@ Then /^there should be (\d+) projects$/ do |project_count|
   @redis.llen("pomidor:projects").should == project_count.to_i
 end
 
+def create_project(name) 
+  result = system "pomidor project create '#{name}'"
+  result.should be_true
+end

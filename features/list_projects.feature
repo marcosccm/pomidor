@@ -3,7 +3,14 @@ Feature: List the Projects
   As a developer
   I want to see a list of my projects
 
-  Scenario: List a Single Project
-    Given a project called "attack of the pomidor"
+  Scenario: List Multiple Projects
+    Given the following projects
+      | name   |
+      | mimir  |
+      | bragi  |
     When  I run `pomidor project list`
-    Then  the output should contain "attack of the pomidor"
+    Then  the output should contain: 
+      """
+      mimir
+      bragi
+      """
