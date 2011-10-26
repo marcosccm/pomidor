@@ -19,6 +19,7 @@ Main do
       end
       def run 
         id = redis.llen("pomidor:projects") + 1
+        last_id = redis.set("pomidor:current_project", id)
         redis.lpush("pomidor:projects", id)
         redis.hset("pomidor:projects:#{id}", "name", params["name"].value)
       end
@@ -27,6 +28,24 @@ Main do
     mode("list") do
       def run
         puts *tracker.project_names
+      end
+    end
+
+    mode("current") do
+      description("gets the current project, or get it, if an id is passed")
+      argument("id") do
+        description("the id to set the current project")
+        required false
+      end
+
+      def run
+        if params["id"].given?
+          redis.set("pomidor:current_project", params["id"].value)
+        end
+
+        last_id = redis.get("pomidor:current_project")
+        name = redis.hget("pomidor:projects:#{last_id}", "name")
+        puts name
       end
     end
   end
