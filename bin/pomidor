@@ -18,10 +18,7 @@ Main do
         description("the name of the new project")
       end
       def run 
-        id = redis.llen("pomidor:projects") + 1
-        last_id = redis.set("pomidor:current_project", id)
-        redis.lpush("pomidor:projects", id)
-        redis.hset("pomidor:projects:#{id}", "name", params["name"].value)
+        tracker.add_project(params["name"].value)
       end
     end
 
@@ -32,7 +29,7 @@ Main do
     end
 
     mode("current") do
-      description("gets the current project, or get it, if an id is passed")
+      description("gets the current project, or set it, if an id is passed")
       argument("id") do
         description("the id to set the current project")
         required false

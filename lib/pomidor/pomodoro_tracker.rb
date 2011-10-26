@@ -7,5 +7,12 @@ module Pomidor
         values.concat redis.hvals(key)
       end
     end
+
+    def add_project(name) 
+      id = redis.llen("pomidor:projects") + 1
+      last_id = redis.set("pomidor:current_project", id)
+      redis.lpush("pomidor:projects", id)
+      redis.hset("pomidor:projects:#{id}", "name", name)
+    end
   end
 end
