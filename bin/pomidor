@@ -37,12 +37,10 @@ Main do
 
       def run
         if params["id"].given?
-          redis.set("pomidor:current_project", params["id"].value)
+          tracker.set_current(params["id"].value)
         end
 
-        last_id = redis.get("pomidor:current_project")
-        name = redis.hget("pomidor:projects:#{last_id}", "name")
-        puts name
+        puts tracker.current
       end
     end
   end
