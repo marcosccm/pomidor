@@ -8,6 +8,7 @@ require "grape"
 require "rack/test"
 require "multi_json"
 require "redis"
+require "main"
 
 $redis = Redis.new
 

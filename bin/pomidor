@@ -44,4 +44,16 @@ Main do
       end
     end
   end
+
+  mode("task") do
+    mode("create") do
+      description("adds a new task")
+      argument("name") do
+        description("the name of the new task")
+      end
+      def run 
+        tracker.add_task(params["name"].value)
+      end
+    end
+  end
 end

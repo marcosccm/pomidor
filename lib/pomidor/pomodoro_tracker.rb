@@ -20,13 +20,23 @@ module Pomidor
       set_current(id)
     end
 
+    def add_task(name)
+      id = redis.llen("pomidor:tasks") + 1
+      redis.hset("pomidor:tasks:#{id}", "name", name)
+      redis.hset("pomidor:tasks:#{id}", "id", id)
+      redis.hset("pomidor:tasks:#{id}", "project_id", current_id)
+    end
+
     def set_current(id)
       redis.set("pomidor:current_project", id)
     end
 
     def current
-      last_id = redis.get("pomidor:current_project")
-      name = redis.hget("pomidor:projects:#{last_id}", "name")
+      name = redis.hget("pomidor:projects:#{current_id}", "name")
+    end
+
+    def current_id
+      redis.get("pomidor:current_project")
     end
   end
 end
