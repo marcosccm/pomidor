@@ -3,8 +3,12 @@ module Pomidor
     fattr(:redis) { Redis.new } 
 
     def project_names 
+      projects.map(&:description)
+    end
+
+    def projects
       redis.keys("pomidor:projects:*").inject([]) do |values, key|
-        values << "#{redis.hget(key, 'id')} - #{redis.hget(key, 'name')}"
+        values << Project.new(redis.hget(key, 'id'),redis.hget(key, 'name'))
       end
     end
 
