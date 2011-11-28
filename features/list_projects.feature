@@ -11,6 +11,6 @@ Feature: List the Projects
     When  I run `pomidor project list`
     Then  the output should contain: 
       """
-      mimir
-      bragi
+      1 - mimir
+      2 - bragi
       """

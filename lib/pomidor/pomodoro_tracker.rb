@@ -4,7 +4,7 @@ module Pomidor
 
     def project_names 
       redis.keys("pomidor:projects:*").inject([]) do |values, key|
-        values.concat redis.hvals(key)
+        values << "#{redis.hget(key, 'id')} - #{redis.hget(key, 'name')}"
       end
     end
 
@@ -12,6 +12,7 @@ module Pomidor
       id = redis.llen("pomidor:projects") + 1
       redis.lpush("pomidor:projects", id)
       redis.hset("pomidor:projects:#{id}", "name", name)
+      redis.hset("pomidor:projects:#{id}", "id", id)
       set_current(id)
     end
 
